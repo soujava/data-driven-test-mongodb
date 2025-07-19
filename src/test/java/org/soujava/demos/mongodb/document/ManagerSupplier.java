@@ -3,19 +3,24 @@ package org.soujava.demos.mongodb.document;
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Default;
 import jakarta.enterprise.inject.Produces;
 import jakarta.interceptor.Interceptor;
-import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentManager;
+import org.eclipse.jnosql.communication.semistructured.DatabaseManager;
+import org.eclipse.jnosql.mapping.Database;
+import org.eclipse.jnosql.mapping.DatabaseType;
 
 import java.util.function.Supplier;
 
 @ApplicationScoped
 @Alternative
 @Priority(Interceptor.Priority.APPLICATION)
-public class ManagerSupplier implements Supplier<MongoDBDocumentManager> {
+public class ManagerSupplier implements Supplier<DatabaseManager> {
 
     @Produces
-    public MongoDBDocumentManager get() {
+    @Database(DatabaseType.DOCUMENT)
+    @Default
+    public DatabaseManager get() {
         return DocumentDatabase.INSTANCE.get("database");
     }
 }
