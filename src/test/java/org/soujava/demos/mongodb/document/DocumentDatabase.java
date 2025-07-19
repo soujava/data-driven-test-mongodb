@@ -8,6 +8,7 @@ import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfigu
 import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfigurations;
 import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentManager;
 import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentManagerFactory;
+import org.eclipse.jnosql.mapping.core.config.MappingConfigurations;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 
@@ -31,16 +32,17 @@ public enum DocumentDatabase {
     }
 
     public MongoDBDocumentManager get(String database) {
-        Settings settings = getSettings();
+        Settings settings = getSettings(database);
         MongoDBDocumentConfiguration configuration = new MongoDBDocumentConfiguration();
         MongoDBDocumentManagerFactory factory = configuration.apply(settings);
         return factory.apply(database);
     }
 
 
-    private Settings getSettings() {
+    private Settings getSettings(String database) {
         Map<String,Object> settings = new HashMap<>();
         settings.put(MongoDBDocumentConfigurations.HOST.get()+".1", host());
+        settings.put(MappingConfigurations.DOCUMENT_DATABASE.get(), database);
         return Settings.of(settings);
     }
 
