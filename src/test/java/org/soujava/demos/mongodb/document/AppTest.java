@@ -1,6 +1,8 @@
 package org.soujava.demos.mongodb.document;
 
 import jakarta.inject.Inject;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.eclipse.jnosql.databases.mongodb.mapping.MongoDBTemplate;
 import org.eclipse.jnosql.mapping.Database;
 import org.eclipse.jnosql.mapping.core.Converters;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.Test;
 @EnableAutoWeld
 @AddPackages(value = {Database.class, EntityConverter.class, DocumentTemplate.class, MongoDBTemplate.class})
 @AddPackages(App.class)
+@AddPackages(ManagerSupplier.class)
 @AddPackages(MongoDBTemplate.class)
 @AddPackages(Reflections.class)
 @AddPackages(Converters.class)
@@ -29,6 +32,15 @@ class AppTest {
 
     @Test
     void shouldTest() {
+        Product product = new Product();
+        Product insert = template.insert(product);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(insert.getId()).isNotNull();
+            softly.assertThat(insert.getName()).isNull();
+            softly.assertThat(insert.getManufacturer()).isNull();
+            softly.assertThat(insert.getTags()).isEmpty();
+            softly.assertThat(insert.getCategories()).isEmpty();
+        });
 
     }
 
