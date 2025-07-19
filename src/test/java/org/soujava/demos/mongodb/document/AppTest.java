@@ -1,16 +1,17 @@
 package org.soujava.demos.mongodb.document;
 
-import io.smallrye.config.Converters;
+import jakarta.inject.Inject;
 import org.eclipse.jnosql.databases.mongodb.mapping.MongoDBTemplate;
 import org.eclipse.jnosql.mapping.Database;
+import org.eclipse.jnosql.mapping.core.Converters;
 import org.eclipse.jnosql.mapping.document.DocumentTemplate;
 import org.eclipse.jnosql.mapping.document.spi.DocumentExtension;
+import org.eclipse.jnosql.mapping.reflection.Reflections;
 import org.eclipse.jnosql.mapping.reflection.spi.ReflectionEntityMetadataExtension;
 import org.eclipse.jnosql.mapping.semistructured.EntityConverter;
 import org.jboss.weld.junit5.auto.AddExtensions;
 import org.jboss.weld.junit5.auto.AddPackages;
 import org.jboss.weld.junit5.auto.EnableAutoWeld;
-import org.jboss.weld.util.reflection.Reflections;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @AddExtensions({ReflectionEntityMetadataExtension.class, DocumentExtension.class})
 class AppTest {
 
+    @Inject
     private DocumentTemplate template;
 
     @Test
