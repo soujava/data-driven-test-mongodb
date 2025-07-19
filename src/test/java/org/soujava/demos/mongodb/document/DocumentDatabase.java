@@ -1,0 +1,50 @@
+package org.soujava.demos.mongodb.document;
+
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import org.eclipse.jnosql.communication.Settings;
+import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfiguration;
+import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfigurations;
+import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentManager;
+import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentManagerFactory;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
+
+import java.util.HashMap;
+import java.util.Map;
+public enum DocumentDatabase {
+
+    INSTANCE;
+
+    private final GenericContainer<?> mongodb =
+            new GenericContainer<>("mongo:latest")
+                    .withExposedPorts(27017)
+                    .waitingFor(Wait.defaultWaitStrategy());
+
+    {
+        mongodb.start();
+    }
+
+    public MongoClient mongoClient() {
+        return MongoClients.create(new ConnectionString("mongodb://" + host()));
+    }
+
+    public MongoDBDocumentManager get(String database) {
+        Settings settings = getSettings();
+        MongoDBDocumentConfiguration configuration = new MongoDBDocumentConfiguration();
+        MongoDBDocumentManagerFactory factory = configuration.apply(settings);
+        return factory.apply(database);
+    }
+
+
+    private Settings getSettings() {
+        Map<String,Object> settings = new HashMap<>();
+        settings.put(MongoDBDocumentConfigurations.HOST.get()+".1", host());
+        return Settings.of(settings);
+    }
+
+    public String host() {
+        return mongodb.getHost() + ":" + mongodb.getFirstMappedPort();
+    }
+}
