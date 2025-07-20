@@ -30,6 +30,23 @@ public class Room {
     @Column
     private boolean underMaintenance;
 
+
+    public Room() {
+    }
+
+    public Room(String id, int roomNumber,
+                RoomType type, RoomStatus status,
+                CleanStatus cleanStatus,
+                boolean smokingAllowed, boolean underMaintenance) {
+        this.id = id;
+        this.roomNumber = roomNumber;
+        this.type = type;
+        this.status = status;
+        this.cleanStatus = cleanStatus;
+        this.smokingAllowed = smokingAllowed;
+        this.underMaintenance = underMaintenance;
+    }
+
     public String getId() {
         return id;
     }
@@ -84,5 +101,10 @@ public class Room {
                 ", smokingAllowed=" + smokingAllowed +
                 ", underMaintenance=" + underMaintenance +
                 '}';
+    }
+
+
+    public static RoomBuilder builder() {
+        return new RoomBuilder();
     }
 }
