@@ -44,7 +44,7 @@ public class RoomBuilder {
         return this;
     }
 
-    public Room createRoom() {
+    public Room build() {
         return new Room(id, roomNumber, type, status, cleanStatus, smokingAllowed, underMaintenance);
     }
 }
