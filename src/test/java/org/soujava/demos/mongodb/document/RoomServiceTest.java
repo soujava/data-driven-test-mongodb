@@ -111,6 +111,30 @@ class RoomServiceTest {
         repository.deleteBy();
     }
 
+    @ParameterizedTest(name = "should find rooms by type {0}")
+    @EnumSource(RoomType.class)
+    void shouldFindRoomByType(RoomType type) {
+        List<Room> rooms = this.repository.findByType(type);
+        SoftAssertions.assertSoftly(softly -> softly.assertThat(rooms).allMatch(room -> room.getType().equals(type)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("room")
+    void shouldSaveRoom(Room room) {
+        Room updateRoom = this.repository.newRoom(room);
+
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(updateRoom).isNotNull();
+            softly.assertThat(updateRoom.getId()).isNotNull();
+            softly.assertThat(updateRoom.getRoomNumber()).isEqualTo(room.getRoomNumber());
+            softly.assertThat(updateRoom.getType()).isEqualTo(room.getType());
+            softly.assertThat(updateRoom.getStatus()).isEqualTo(room.getStatus());
+            softly.assertThat(updateRoom.getCleanStatus()).isEqualTo(room.getCleanStatus());
+            softly.assertThat(updateRoom.isSmokingAllowed()).isEqualTo(room.isSmokingAllowed());
+        });
+    }
+
+
     @Test
     void shouldFindRoomReadyToGuest() {
         List<Room> rooms = this.repository.findAvailableStandardRooms();
@@ -149,29 +173,6 @@ class RoomServiceTest {
             softly.assertThat(rooms).hasSize(2);
             softly.assertThat(rooms).allMatch(room -> !room.getCleanStatus().equals(CleanStatus.CLEAN));
             softly.assertThat(rooms).allMatch(room -> !room.getStatus().equals(RoomStatus.OUT_OF_SERVICE));
-        });
-    }
-
-    @ParameterizedTest(name = "should find rooms by type {0}")
-    @EnumSource(RoomType.class)
-    void shouldFindRoomByType(RoomType type) {
-        List<Room> rooms = this.repository.findByType(type);
-        SoftAssertions.assertSoftly(softly -> softly.assertThat(rooms).allMatch(room -> room.getType().equals(type)));
-    }
-
-    @ParameterizedTest
-    @MethodSource("room")
-    void shouldSaveRoom(Room room) {
-        Room updateRoom = this.repository.newRoom(room);
-
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(updateRoom).isNotNull();
-            softly.assertThat(updateRoom.getId()).isNotNull();
-            softly.assertThat(updateRoom.getRoomNumber()).isEqualTo(room.getRoomNumber());
-            softly.assertThat(updateRoom.getType()).isEqualTo(room.getType());
-            softly.assertThat(updateRoom.getStatus()).isEqualTo(room.getStatus());
-            softly.assertThat(updateRoom.getCleanStatus()).isEqualTo(room.getCleanStatus());
-            softly.assertThat(updateRoom.isSmokingAllowed()).isEqualTo(room.isSmokingAllowed());
         });
     }
 
