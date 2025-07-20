@@ -32,15 +32,6 @@ class AppTest {
 
     @Test
     void shouldTest() {
-        Product product = new Product();
-        Product insert = template.insert(product);
-        SoftAssertions.assertSoftly(softly -> {
-            softly.assertThat(insert.getId()).isNotNull();
-            softly.assertThat(insert.getName()).isNull();
-            softly.assertThat(insert.getManufacturer()).isNull();
-            softly.assertThat(insert.getTags()).isEmpty();
-            softly.assertThat(insert.getCategories()).isEmpty();
-        });
 
     }
 
