@@ -16,6 +16,8 @@ import org.jboss.weld.junit5.auto.EnableAutoWeld;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.util.List;
 
@@ -145,5 +147,12 @@ class RoomServiceTest {
            softly.assertThat(rooms).allMatch(room -> !room.getCleanStatus().equals(CleanStatus.CLEAN));
            softly.assertThat(rooms).allMatch(room -> !room.getStatus().equals(RoomStatus.OUT_OF_SERVICE));
        });
+   }
+
+   @ParameterizedTest(name = "should find rooms by type {0}")
+   @EnumSource(RoomType.class)
+   void shouldFindRoomByType(RoomType type) {
+         List<Room> rooms = this.repository.findByType(type);
+         SoftAssertions.assertSoftly(softly -> softly.assertThat(rooms).allMatch(room -> room.getType().equals(type)));
    }
 }

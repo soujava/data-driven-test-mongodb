@@ -1,6 +1,7 @@
 package org.soujava.demos.mongodb.document;
 
 import jakarta.data.repository.Delete;
+import jakarta.data.repository.Param;
 import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
 import jakarta.data.repository.Save;
@@ -26,4 +27,7 @@ public interface RoomRepository {
     void save(List<Room> rooms);
 
     void deleteBy();
+
+    @Query("WHERE type = :type")
+    List<Room> findByType(@Param("type") RoomType type);
 }
