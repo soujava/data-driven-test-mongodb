@@ -1,7 +1,9 @@
 package org.soujava.demos.mongodb.document;
 
+import jakarta.data.repository.Delete;
 import jakarta.data.repository.Query;
 import jakarta.data.repository.Repository;
+import jakarta.data.repository.Save;
 
 import java.util.List;
 
@@ -14,9 +16,14 @@ public interface RoomRepository {
     @Query(" WHERE type <> 'VIP_SUITE' AND status = 'AVAILABLE' AND cleanStatus = 'CLEAN'")
     List<Room> findAvailableStandardRooms();
 
-    @Query("WHERE cleanStatus <> 'CLEAN' AND status != 'OUT_OF_SERVICE'")
+    @Query("WHERE cleanStatus <> 'CLEAN' AND status <> 'OUT_OF_SERVICE'")
     List<Room> findRoomsNeedingCleaning();
 
     @Query("WHERE smokingAllowed = true AND status = 'AVAILABLE'")
     List<Room> findAvailableSmokingRooms();
+
+    @Save
+    void save(List<Room> rooms);
+
+    void deleteBy();
 }
