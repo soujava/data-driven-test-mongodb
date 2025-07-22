@@ -44,7 +44,7 @@ class AppTest {
         Room insert = template.insert(room);
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(room.getId()).isEqualTo(insert.getId());
-            softly.assertThat(room.getRoomNumber()).isEqualTo(insert.getRoomNumber());
+            softly.assertThat(room.getNumber()).isEqualTo(insert.getNumber());
             softly.assertThat(room.getType()).isEqualTo(insert.getType());
             softly.assertThat(room.getStatus()).isEqualTo(insert.getStatus());
             softly.assertThat(room.getCleanStatus()).isEqualTo(insert.getCleanStatus());

@@ -13,7 +13,7 @@ public class Room {
     private String id;
 
     @Column
-    private int roomNumber;
+    private int number;
 
     @Column
     private RoomType type;
@@ -34,12 +34,12 @@ public class Room {
     public Room() {
     }
 
-    public Room(String id, int roomNumber,
+    public Room(String id, int number,
                 RoomType type, RoomStatus status,
                 CleanStatus cleanStatus,
                 boolean smokingAllowed, boolean underMaintenance) {
         this.id = id;
-        this.roomNumber = roomNumber;
+        this.number = number;
         this.type = type;
         this.status = status;
         this.cleanStatus = cleanStatus;
@@ -51,8 +51,8 @@ public class Room {
         return id;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public int getNumber() {
+        return number;
     }
 
     public RoomType getType() {
@@ -94,7 +94,7 @@ public class Room {
     public String toString() {
         return "Room{" +
                 "id='" + id + '\'' +
-                ", roomNumber=" + roomNumber +
+                ", roomNumber=" + number +
                 ", type=" + type +
                 ", status=" + status +
                 ", cleanStatus=" + cleanStatus +

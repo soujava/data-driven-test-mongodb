@@ -126,7 +126,7 @@ class RoomServiceTest {
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(updateRoom).isNotNull();
             softly.assertThat(updateRoom.getId()).isNotNull();
-            softly.assertThat(updateRoom.getRoomNumber()).isEqualTo(room.getRoomNumber());
+            softly.assertThat(updateRoom.getNumber()).isEqualTo(room.getNumber());
             softly.assertThat(updateRoom.getType()).isEqualTo(room.getType());
             softly.assertThat(updateRoom.getStatus()).isEqualTo(room.getStatus());
             softly.assertThat(updateRoom.getCleanStatus()).isEqualTo(room.getCleanStatus());
