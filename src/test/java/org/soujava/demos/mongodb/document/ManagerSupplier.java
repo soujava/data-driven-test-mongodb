@@ -24,6 +24,6 @@ public class ManagerSupplier implements Supplier<DatabaseManager> {
     @Default
     @Typed({DatabaseManager.class, MongoDBDocumentManager.class})
     public MongoDBDocumentManager get() {
-        return DatabaseContainer.INSTANCE.get("database");
+        return DatabaseContainer.INSTANCE.get("hotel");
     }
 }
