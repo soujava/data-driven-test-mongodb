@@ -181,15 +181,17 @@ class RoomServiceTest {
     }
 
     static Stream<Arguments> room() {
-        Room room = new RoomBuilder()
+        return Stream.of(Arguments.of(getRoom(), Arguments.of(getRoom(), Arguments.of(getRoom()))));
+    }
+
+    private static Room getRoom() {
+        return new RoomBuilder()
                 .roomNumber(FAKER.number().numberBetween(100, 999))
                 .type(randomEnum(RoomType.class))
                 .status(randomEnum(RoomStatus.class))
                 .cleanStatus(randomEnum(CleanStatus.class))
                 .smokingAllowed(FAKER.bool().bool())
                 .build();
-
-        return Stream.of(Arguments.of(room));
     }
 
     private static <T extends Enum<?>> T randomEnum(Class<T> enumClass) {
