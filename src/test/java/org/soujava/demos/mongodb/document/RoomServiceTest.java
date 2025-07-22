@@ -1,6 +1,7 @@
 package org.soujava.demos.mongodb.document;
 
 import jakarta.inject.Inject;
+import net.datafaker.Faker;
 import org.assertj.core.api.SoftAssertions;
 import org.eclipse.jnosql.databases.mongodb.mapping.MongoDBTemplate;
 import org.eclipse.jnosql.mapping.Database;
@@ -22,6 +23,7 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
 
 
@@ -37,6 +39,8 @@ class RoomServiceTest {
 
     @Inject
     private RoomRepository repository;
+
+    private static final  Faker FAKER = new Faker();
 
     @BeforeEach
     void setUP() {
@@ -178,13 +182,19 @@ class RoomServiceTest {
 
     static Stream<Arguments> room() {
         Room room = new RoomBuilder()
-                .roomNumber(101)
-                .type(RoomType.VIP_SUITE)
-                .status(RoomStatus.AVAILABLE)
-                .cleanStatus(CleanStatus.CLEAN)
-                .smokingAllowed(false)
+                .roomNumber(FAKER.number().numberBetween(100, 999))
+                .type(randomEnum(RoomType.class))
+                .status(randomEnum(RoomStatus.class))
+                .cleanStatus(randomEnum(CleanStatus.class))
+                .smokingAllowed(FAKER.bool().bool())
                 .build();
 
         return Stream.of(Arguments.of(room));
+    }
+
+    private static <T extends Enum<?>> T randomEnum(Class<T> enumClass) {
+        T[] constants = enumClass.getEnumConstants();
+        int index = ThreadLocalRandom.current().nextInt(constants.length);
+        return constants[index];
     }
 }
