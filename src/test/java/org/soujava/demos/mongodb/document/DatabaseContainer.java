@@ -1,8 +1,5 @@
 package org.soujava.demos.mongodb.document;
 
-import com.mongodb.ConnectionString;
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
 import org.eclipse.jnosql.communication.Settings;
 import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfiguration;
 import org.eclipse.jnosql.databases.mongodb.communication.MongoDBDocumentConfigurations;
@@ -26,11 +23,6 @@ public enum DatabaseContainer {
     {
         mongodb.start();
     }
-
-    public MongoClient mongoClient() {
-        return MongoClients.create(new ConnectionString("mongodb://" + host()));
-    }
-
     public MongoDBDocumentManager get(String database) {
         Settings settings = getSettings(database);
         MongoDBDocumentConfiguration configuration = new MongoDBDocumentConfiguration();
