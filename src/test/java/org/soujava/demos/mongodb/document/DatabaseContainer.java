@@ -14,7 +14,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 
 import java.util.HashMap;
 import java.util.Map;
-public enum DocumentDatabase {
+public enum DatabaseContainer {
 
     INSTANCE;
 

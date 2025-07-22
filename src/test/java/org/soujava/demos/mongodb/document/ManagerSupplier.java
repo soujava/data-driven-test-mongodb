@@ -21,6 +21,6 @@ public class ManagerSupplier implements Supplier<DatabaseManager> {
     @Database(DatabaseType.DOCUMENT)
     @Default
     public DatabaseManager get() {
-        return DocumentDatabase.INSTANCE.get("database");
+        return DatabaseContainer.INSTANCE.get("database");
     }
 }
