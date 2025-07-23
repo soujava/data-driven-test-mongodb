@@ -8,8 +8,6 @@ image::http://www.jnosql.org/img/logos/mongodb.png[MongoDB, width=200px]
 
 == How to install with Docker
 
-image::https://d1q6f0aelx0por.cloudfront.net/product-logos/library-docker-logo.png[]
-
 1. Install docker: https://www.docker.com/
 2. https://hub.docker.com/_/mongo
 3. Run docker command:
