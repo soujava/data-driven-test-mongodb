@@ -165,7 +165,7 @@ class RoomServiceTest {
         List<Room> rooms = this.repository.findAvailableSmokingRooms();
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(rooms).hasSize(2);
-            softly.assertThat(rooms).allMatch(room -> room.isSmokingAllowed());
+            softly.assertThat(rooms).allMatch(Room::isSmokingAllowed);
             softly.assertThat(rooms).allMatch(room -> room.getStatus().equals(RoomStatus.AVAILABLE));
         });
     }
