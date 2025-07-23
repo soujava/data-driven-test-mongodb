@@ -1,4 +1,4 @@
-= arangodb-java-2025
+= Data Driven Test
 :toc: auto
 
 image::http://www.jnosql.org/img/logos/mongodb.png[MongoDB, width=200px]
